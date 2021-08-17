@@ -36,10 +36,9 @@ http.createServer(function (req, res) {
 		  //post request to nlp server
 		if(fields.input_type=="summary")
 		{
-<<<<<<< Updated upstream
-=======
+
 			var data =  fields.description;
->>>>>>> Stashed changes
+
 			console.log(data);
 			  axios
 				  .post('http://127.0.0.1:12345', "summarize : " + data)
@@ -65,9 +64,7 @@ http.createServer(function (req, res) {
 				}
 			}, 100); 
 		}// interval set at 100 milliseconds
-<<<<<<< Updated upstream
 
-=======
 		else if(fields.input_type=="QnA")
 		{
 			console.log("in QnA handling");
@@ -97,7 +94,7 @@ http.createServer(function (req, res) {
 				}
 			},100);	 
 		}
->>>>>>> Stashed changes
+
       
     });
   } 
