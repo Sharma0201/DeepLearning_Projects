@@ -11,7 +11,7 @@ http.createServer(function (req, res) {
 	var summary_data = '';
 	const decoder = new StringDecoder('utf8');
 	//form file upload concept
-  if (req.url == '/' && req.method.toLowerCase()=="post") {
+  if ((req.url == '/' || req.url =='/QnA')&& req.method.toLowerCase()=="post") {
 	  console.log("/fileupload");
     var form = new formidable.IncomingForm();
 	//form parser
@@ -34,33 +34,34 @@ http.createServer(function (req, res) {
 		  }
 		  */
 		  //post request to nlp server
-		  console.log(data);
-		  axios
-			  .post('http://127.0.0.1:12345', "summarize : " + data)
-			  .then(res => {
-				console.log(`statusCode: ${res.status}`)
-				console.log(res.data)
-				//data recieved from nlp endpoint
-				summary_data = res.data
-			  })
-			  .catch(error => {
-				console.error(error)
-			  })
-		
-     // res.write('File uploaded');
-	  //as nodejs is async, it calls the nlp endpoint and move to res.end(), because of it, we were not able to post the the summary data on the web page, hence to sync it, we are waiting till the summary data is not empty
-	 var _flagCheck = setInterval(function() {
-			if (summary_data !== '') {
-				clearInterval(_flagCheck);
-				//ressponse to web client
-				res.writeHead(200, {'Content-Type': 'text/html'});
-				res.write(summary_data); // the function to run once all flags are true
-				res.end();
-			}
-		}, 100); // interval set at 100 milliseconds
+		if(fields.input_type=="summary")
+		{
+			console.log(data);
+			  axios
+				  .post('http://127.0.0.1:12345', "summarize : " + data)
+				  .then(res => {
+					console.log(`statusCode: ${res.status}`)
+					console.log(res.data)
+					//data recieved from nlp endpoint
+					summary_data = res.data
+				  })
+				  .catch(error => {
+					console.error(error)
+				  })
+			
+			// res.write('File uploaded');
+			//as nodejs is async, it calls the nlp endpoint and move to res.end(), because of it, we were not able to post the the summary data on the web page, hence to sync it, we are waiting till the summary data is not empty
+			var _flagCheck = setInterval(function() {
+				if (summary_data !== '') {
+					clearInterval(_flagCheck);
+					//ressponse to web client
+					res.writeHead(200, {'Content-Type': 'text/html'});
+					res.write(summary_data); // the function to run once all flags are true
+					res.end();
+				}
+			}, 100); 
+		}// interval set at 100 milliseconds
 
-	  
-	  
       
     });
   } 
