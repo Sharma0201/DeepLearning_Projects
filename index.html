@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<title> Summary </title>
+<h1> Summary Task </h1>
+<body style="background-color:rgb(139,157,195);">
+
+
+
+<p id="demo"></p>
+
+<form  method="post" enctype="multipart/form-data">
+	<br><br><br>
+	
+	<center><input id='radio_summ' type='radio' value="summary" name="input_type" checked>
+	<label for="radio_summ">Summary</label>
+	
+	<input id='radio_qna' type='radio' value="QnA" name="input_type">
+	<label for="radio_qna">QnA</label><br></center><br>
+	
+	
+	
+	<center><textarea rows = "5" cols = "60" name = "description" id = "passage_entry" ALIGN=LEFT>
+	
+            
+    </textarea><br></center>
+	<!--<center><input id = "file_input" type ="file" ></center>-->
+	
+<center><button type="submit"> <!--onclick="validator_()"--> Submit</button></center>
+</form>
+
+
+<script>
+	function validator_()
+	{
+
+		let x = document.getElementById("input").value;
+		console.log(x);
+		if(isNaN(x) || x<1 || x>10)	
+		{
+			alert("please insert the numerica value");
+			console.log("here");
+			
+		}
+		else
+		{
+			
+			console.log("there");
+			
+		}
+	}
+	
+let x = document.getElementById('radio_summ');
+x.addEventListener("click",summary_radio);
+let y = document.getElementById('radio_qna');
+y.addEventListener("click",httpGet_QnA);
+
+function summary_radio()
+{	
+	//if(document.getElementById('radio_summ').checked)
+	//window.location.assign("http://127.0.0.1:8080/");
+	//document.getElementById('radio_summ').value = "summary";
+	/*theUrl = "http://127.0.0.1:8080/";
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;*/
+}
+
+function QnA_radio()
+{
+	document.getElementById('demo').innerHTML= "QnA";
+}
+
+function httpGet_QnA()
+{
+	
+	window.location.assign("http://127.0.0.1:8080/QnA");
+	//document.getElementById('radio_qna').value = "QnA";
+	/*theUrl = "http://127.0.0.1:8080/QnA";
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;*/
+}
+</script>
+
+
+</body>
+</html>
+
+
