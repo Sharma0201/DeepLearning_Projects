@@ -9,6 +9,7 @@ const { StringDecoder }  = require('string_decoder');
 
 http.createServer(function (req, res) {
 	var summary_data = '';
+	var answer = '';
 	const decoder = new StringDecoder('utf8');
 	//form file upload concept
   if ((req.url == '/' || req.url =='/QnA')&& req.method.toLowerCase()=="post") {
@@ -20,8 +21,7 @@ http.createServer(function (req, res) {
 		
 		//res.writeHead(200, { 'Content-Type': 'application/json' });
       //res.end(JSON.stringify({ fields, files }, null, 2));
-	  var data =  fields.description;
-	  var radio_input = fields.input_type;
+	 var radio_input = fields.input_type;
 	  //console.log(radio_input);
 	  //console.log("hello world");
 	  //console.log(decoder.write(data));
@@ -36,6 +36,10 @@ http.createServer(function (req, res) {
 		  //post request to nlp server
 		if(fields.input_type=="summary")
 		{
+<<<<<<< Updated upstream
+=======
+			var data =  fields.description;
+>>>>>>> Stashed changes
 			console.log(data);
 			  axios
 				  .post('http://127.0.0.1:12345', "summarize : " + data)
@@ -61,7 +65,39 @@ http.createServer(function (req, res) {
 				}
 			}, 100); 
 		}// interval set at 100 milliseconds
+<<<<<<< Updated upstream
 
+=======
+		else if(fields.input_type=="QnA")
+		{
+			console.log("in QnA handling");
+			var context = fields.description;
+			var question = fields.question_input;
+			var obj = {"context": context, "question": question};
+			var obj_str = JSON.stringify(obj);
+			axios
+				 .post("http://127.0.0.1:3128",obj_str)
+				 .then(res => {
+					 answer = res.data;
+					 console.log(answer);
+				 })
+				 .catch(error =>{
+					 console.log(error);
+				 })
+				 
+		var flagcheck = setInterval(function(){
+				if(answer !== '')
+				{
+					console.log("answer recieved");
+					clearInterval(_flagCheck);
+					//ressponse to web client
+					res.writeHead(200, {'Content-Type': 'text/html'});
+					res.write(answer); // the function to run once all flags are true
+					res.end();
+				}
+			},100);	 
+		}
+>>>>>>> Stashed changes
       
     });
   } 
