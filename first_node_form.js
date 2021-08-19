@@ -86,7 +86,7 @@ http.createServer(function (req, res) {
 				if(answer !== '')
 				{
 					console.log("answer recieved");
-					clearInterval(_flagCheck);
+					clearInterval(flagcheck);
 					//ressponse to web client
 					res.writeHead(200, {'Content-Type': 'text/html'});
 					res.write(answer); // the function to run once all flags are true
